@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tebak Gambar | MiyaBot</title>
+<title>Asah Otak | MiyaBot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
@@ -31,19 +32,17 @@ border-bottom: 1px solid #ccc;
 .content {
 margin: 25px 20px 35px;
 }
-#gambar {
-display: block;
-width: 100%;
-border-radius: 7px;
-margin-bottom: 15px;
-}
-#desc {
+#soal {
 margin-bottom: 10px;
 font-style: italic;
 text-align: center;
 }
-input {
-width: 100%;
+input{
+height: 55px;
+font-size: 17px;
+}
+input{
+width: 90%;
 height: 60px;
 outline: none;
 padding: 0 16px;
@@ -51,11 +50,14 @@ font-size: 18px;
 border-radius: 5px;
 border: 1px solid #bfbfbf;
 }
-input:focus {
+input:focus{
 box-shadow: 0px 2px 4px rgba(0,0,0,0.08);
 }
-input::placeholder {
+input::placeholder{
 color: #aaa;
+}
+input:focus::placeholder{
+color: #bfbfbf;
 }
 .buttons {
 display: flex;
@@ -117,14 +119,13 @@ background: #5f666d;
 </head>
 <body>
 <div class="container">
-<h1>Tebak Gambar</h1>
+<h1>Asah Otak</h1>
 <div class="content">
 <div class="phone-display">
 <p>Nomor WhatsApp Anda: <span id="phoneDisplay"></span></p>
 <button id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
 </div>
-<img id="gambar" src="" alt="Tebak Gambar">
-<p id="desc"></p>
+<p id="soal"></p>
 <input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
 <div class="buttons">
 <button id="refresh">Perbarui Gambar</button>
@@ -143,13 +144,12 @@ document.getElementById('phoneDisplay').innerText = phoneNumber;
 
 async function loadNewImage() {
 try {
-const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebakgambar.json');
+const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/asahotak.json');
 const d = await res.json();
 const data = d.result
 const randomImage = data[Math.floor(Math.random() * data.length)];
 correctAnswer = randomImage.jawaban.toLowerCase();
-document.getElementById('desc').innerText = randomImage.deskripsi;
-document.getElementById('gambar').src = randomImage.image;
+document.getElementById('soal').innerText = randomImage.soal;
 document.getElementById('jawaban').value = '';
 } catch (error) {
 Swal.fire('Error!', 'Gagal mengambil gambar.', 'error');
@@ -183,7 +183,7 @@ try {
 await fetch('/api/winners', {
 method: 'POST',
 headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Gambar', timestamp: new Date().toISOString() })
+body: JSON.stringify({ phone: phoneNumber, game: 'Asah Otak', timestamp: new Date().toISOString() })
 });
 Swal.fire('Sukses!', 'Kemenanganmu telah dicatat!', 'success');
 loadNewImage();

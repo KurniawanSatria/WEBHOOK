@@ -7,18 +7,20 @@ this.winners = []
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '.')));
 
+app.get('/', (req, res) => {
+res.sendFile(path.join(__dirname, 'index.html'))
+})
 
-
-app.get('/games/tebakheroml', (req, res) => {
-res.sendFile(path.join(__dirname,'games/tebakhero/tebak-heroml.html'));
+app.get('/games/asahotak', (req, res) => {
+res.sendFile(path.join(__dirname,'games/asahotak.html'));
 });
 
 app.get('/games/susunkata', (req, res) => {
-res.sendFile(path.join(__dirname,'games/susunkata/susun-kata.html'));
+res.sendFile(path.join(__dirname,'games/susunkata.html'));
 });
 
 app.get('/games/tebakgambar', (req, res) => {
-res.sendFile(path.join(__dirname,'games/tebakgambar/tebak-gambar.html'));
+res.sendFile(path.join(__dirname,'games/tebakgambar.html'));
 });
 
 
