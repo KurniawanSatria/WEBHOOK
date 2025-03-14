@@ -1,32 +1,145 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Tebak Gambar</title>
-<link rel="stylesheet" href="/games/tebakgambar/style.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Tebak Gambar | MiyaBot</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-body {background-color: #f0f8ff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;}
-.container {background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center;}
-img {max-width: 100%; height: auto; margin-bottom: 20px; border-radius: 5px;}
-input {margin-top: 10px; margin-bottom: 20px;}
-button {padding: 10px 20px;}
-#desc {margin-bottom: 10px; font-style: italic;}
+body {
+margin: 0; padding: 0;
+box-sizing: border-box;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+background: #5372F0;
+font-family: 'Poppins', sans-serif;
+}
+.container {
+width: 440px;
+border-radius: 7px;
+background: #fff;
+box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+.container h1 {
+font-size: 25px;
+font-weight: 500;
+padding: 16px 25px;
+text-align: center;
+border-bottom: 1px solid #ccc;
+}
+.content {
+margin: 25px 20px 35px;
+}
+#gambar {
+display: block;
+width: 100%;
+border-radius: 7px;
+margin-bottom: 15px;
+}
+#desc {
+margin-bottom: 10px;
+font-style: italic;
+text-align: center;
+}
+input {
+width: 100%;
+height: 60px;
+outline: none;
+padding: 0 16px;
+font-size: 18px;
+border-radius: 5px;
+border: 1px solid #bfbfbf;
+}
+input:focus {
+box-shadow: 0px 2px 4px rgba(0,0,0,0.08);
+}
+input::placeholder {
+color: #aaa;
+}
+.buttons {
+display: flex;
+margin-top: 20px;
+justify-content: space-between;
+}
+.buttons button {
+border: none;
+outline: none;
+color: #fff;
+cursor: pointer;
+padding: 15px 0;
+font-size: 17px;
+border-radius: 5px;
+width: calc(50% - 5px);
+background: #5372F0;
+transition: all 0.3s ease;
+}
+.buttons button:hover {
+background: #2c52ed;
+}
+.buttons button:active {
+transform: scale(0.97);
+}
+.phone-display {
+text-align: center;
+margin-bottom: 20px;
+}
+.phone-display p {
+margin: 5px 0;
+}
+.buttons button, #changePhone {
+border: none;
+outline: none;
+color: #fff;
+cursor: pointer;
+padding: 15px 0;
+font-size: 17px;
+border-radius: 5px;
+width: calc(50% - 5px);
+background: #5372F0;
+transition: all 0.3s ease;
+}
+.buttons button:hover, #changePhone:hover {
+background: #2c52ed;
+}
+.buttons button:active, #changePhone:active {
+transform: scale(0.97);
+}
+#changePhone {
+width: 100%;
+margin-top: 10px;
+background: #6C757D;
+}
+#changePhone:hover {
+background: #5f666d;
+}
 </style>
 </head>
 <body>
 <div class="container">
-<h1 class="mb-4">Tebak Gambar</h1>
+<h1>Tebak Gambar</h1>
+<div class="content">
+<div class="phone-display">
+<p>Nomor WhatsApp Anda: <span id="phoneDisplay"></span></p>
+<button id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
+</div>
 <img id="gambar" src="" alt="Tebak Gambar">
 <p id="desc"></p>
-<input type="text" id="jawaban" class="form-control" placeholder="Masukkan Jawaban">
-<div class="buttons mt-3">
-<button id="submit" class="btn btn-primary">Submit</button>
+<input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
+<div class="buttons">
+<button id="refresh">Perbarui Gambar</button>
+<button id="submit">Cek Jawaban</button>
+</div>
 </div>
 </div>
 
 <script>
 let correctAnswer;
+
+function updatePhoneDisplay() {
+const phoneNumber = localStorage.getItem('phoneNumber') || 'Belum disetel';
+document.getElementById('phoneDisplay').innerText = phoneNumber;
+}
 
 async function loadNewImage() {
 try {
@@ -44,6 +157,7 @@ Swal.fire('Error!', 'Gagal mengambil gambar.', 'error');
 }
 
 loadNewImage();
+updatePhoneDisplay();
 
 document.getElementById('submit').addEventListener('click', async () => {
 const userAnswer = document.getElementById('jawaban').value.toLowerCase();
@@ -62,6 +176,7 @@ showCancelButton: true
 if (!inputNumber) return Swal.fire('Dibatalkan', 'Nomor WhatsApp diperlukan untuk klaim hadiah.', 'error');
 phoneNumber = inputNumber;
 localStorage.setItem('phoneNumber', phoneNumber);
+updatePhoneDisplay();
 }
 
 try {
@@ -76,6 +191,23 @@ loadNewImage();
 Swal.fire('Error!', 'Gagal mengirim data ke server.', 'error');
 }
 });
+
+document.getElementById('changePhone').addEventListener('click', async () => {
+let {value: inputNumber} = await Swal.fire({
+title: 'Ubah Nomor WhatsApp',
+input: 'text',
+inputLabel: 'Masukkan nomor WhatsApp baru:',
+inputPlaceholder: 'Nomor WhatsApp',
+showCancelButton: true
+});
+if (inputNumber) {
+localStorage.setItem('phoneNumber', inputNumber);
+updatePhoneDisplay();
+Swal.fire('Berhasil!', 'Nomor WhatsApp telah diperbarui.', 'success');
+}
+});
+
+document.getElementById('refresh').addEventListener('click', loadNewImage);
 </script>
 </body>
 </html>
