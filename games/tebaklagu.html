@@ -4,7 +4,9 @@
 <title>Tebak Gambar | MiyaBot</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 <style>
 body {
 margin: 0; padding: 0;
@@ -118,9 +120,9 @@ transform: scale(0.97);
 </head>
 <body>
 <div class="container">
-<h1>Tebak Gambar</h1>
+<h1>Tebak Lagu</h1>
 <div class="content">
-<img id="gambar" src="" alt="Tebak Gambar">
+<audio id="player" src="" controls></audio>
 <p id="desc"></p>
 <input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
 <div class="buttons">
@@ -135,6 +137,8 @@ transform: scale(0.97);
 </div>
 
 <script>
+const player = new Plyr('#player',{controls: ['play', 'progress', 'current-time',],autoplay: true})
+
 let correctAnswer;
 
 function updatePhoneDisplay() {
@@ -144,13 +148,13 @@ document.getElementById('phoneDisplay').innerText = phoneNumber;
 
 async function loadNewImage() {
 try {
-const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebakgambar.json');
+const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebaklagu.json');
 const d = await res.json();
 const data = d.result
 const randomImage = data[Math.floor(Math.random() * data.length)];
-correctAnswer = randomImage.jawaban.toLowerCase();
-document.getElementById('desc').innerText = randomImage.deskripsi;
-document.getElementById('gambar').src = randomImage.image;
+correctAnswer = randomImage.name.toLowerCase();
+document.getElementById('desc').innerText = 'Artis: '+ randomImage.artist;
+document.getElementById('player').src = randomImage.audio;
 document.getElementById('jawaban').value = '';
 } catch (error) {
 Swal.fire('Error!', 'Gagal mengambil gambar.', 'error');
@@ -184,7 +188,7 @@ try {
 await fetch('/api/winners', {
 method: 'POST',
 headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Gambar', timestamp: new Date().toISOString() })
+body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Lagu', timestamp: new Date().toISOString() })
 });
 Swal.fire('Sukses!', 'Kemenanganmu telah dicatat!', 'success');
 loadNewImage();
@@ -208,7 +212,6 @@ Swal.fire('Berhasil!', 'Nomor WhatsApp telah diperbarui.', 'success');
 }
 });
 
-document.getElementById('refresh').addEventListener('click', loadNewImage);
 </script>
 </body>
 </html>

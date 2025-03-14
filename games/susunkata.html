@@ -28,6 +28,7 @@ border-radius: 7px;
 background: #fff;
 box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
+.container h1 {font-size: 25px;font-weight: 500;padding: 16px 25px;text-align: center;border-bottom: 1px solid #ccc;}
 .container h2{
 font-size: 25px;
 font-weight: 500;
@@ -51,6 +52,7 @@ text-transform: uppercase;
 margin: 25px 0 20px;
 }
 .details p{
+text-align: center;
 font-size: 18px;
 margin-bottom: 10px;
 }
@@ -130,10 +132,7 @@ background: #e68900;
 transform: scale(0.96);
 }
 @media screen and (max-width: 470px) {
-.container h2{
-font-size: 22px;
-padding: 13px 20px;
-}
+.container h2{font-size: 25px;font-weight: 500;padding: 16px 25px;text-align: center;border-bottom: 1px solid #ccc;
 .content .word{
 font-size: 30px;
 letter-spacing: 20px;
@@ -178,33 +177,25 @@ background: #2c52ed;
 .buttons button:active, #changePhone:active {
 transform: scale(0.97);
 }
-#changePhone {
-width: 100%;
-margin-top: 10px;
-background: #6C757D;
-}
-#changePhone:hover {
-background: #5f666d;
-}
+.phone-display {text-align: center;margin-bottom: 20px;}.phone-display p {margin: 5px 0;}
 </style>
 </head>
 <body>
 <div class="container">
-<h2>Susun Kata</h2>
+<h1>Susun Kata</h1>
 <div class="content">
-<div class="phone-display">
-<p><span id="phoneDisplay"></span></p>
-<button id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
-</div>
 <p class="word"></p>
 <div class="details">
 <p class="hint">Petunjuk: <span></span></p>
 <p class="time">Waktu Tersisa: <span><b>30</b>&nbsp;detik</span></p>
 </div>
-  <input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
+<input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
 <div class="buttons">
-<button class="refresh-word">Perbarui Kata</button>
+<button class="refresh-word" id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
 <button class="check-word">Cek Kata</button>
+</div>
+<div class="phone-display">
+<p id="phoneDisplay"></p>
 </div>
 </div>
 </div>

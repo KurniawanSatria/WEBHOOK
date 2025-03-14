@@ -11,12 +11,21 @@ app.get('/', (req, res) => {
 res.sendFile(path.join(__dirname, 'index.html'))
 })
 
+
+app.get('/games/tebaklagu', (req, res) => {
+res.sendFile(path.join(__dirname,'games/tebaklagu.html'));
+});
+
 app.get('/games/asahotak', (req, res) => {
 res.sendFile(path.join(__dirname,'games/asahotak.html'));
 });
 
 app.get('/games/susunkata', (req, res) => {
 res.sendFile(path.join(__dirname,'games/susunkata.html'));
+});
+
+app.get('/games/siapakahaku', (req, res) => {
+res.sendFile(path.join(__dirname,'games/siapakahaku.html'));
 });
 
 app.get('/games/tebakgambar', (req, res) => {
