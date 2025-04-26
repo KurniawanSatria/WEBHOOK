@@ -12,26 +12,29 @@ res.sendFile(path.join(__dirname, 'index.html'))
 })
 
 
-app.get('/games/tebaklagu', (req, res) => {
+app.get('/games/Tebak-Lagu', (req, res) => {
 res.sendFile(path.join(__dirname,'games/tebaklagu.html'));
 });
 
-app.get('/games/asahotak', (req, res) => {
+app.get('/games/Asah-Otak', (req, res) => {
 res.sendFile(path.join(__dirname,'games/asahotak.html'));
 });
 
-app.get('/games/susunkata', (req, res) => {
+app.get('/games/Susun-Kata', (req, res) => {
 res.sendFile(path.join(__dirname,'games/susunkata.html'));
 });
 
-app.get('/games/siapakahaku', (req, res) => {
+app.get('/games/Siapakah-Aku?', (req, res) => {
 res.sendFile(path.join(__dirname,'games/siapakahaku.html'));
 });
 
-app.get('/games/tebakgambar', (req, res) => {
+app.get('/games/Tebak-Gambar', (req, res) => {
 res.sendFile(path.join(__dirname,'games/tebakgambar.html'));
 });
 
+app.get('/games/Tic-Tac-Toe', (req, res) => {
+res.sendFile(path.join(__dirname,'games/Tic-Tac-Toe.html'));
+});
 
 app.post('/api/winners', (req, res) => {
 const { phone, game, timestamp } = req.body;

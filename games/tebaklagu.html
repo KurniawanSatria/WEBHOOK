@@ -1,217 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tebak Gambar | MiyaBot</title>
+<title>Tebak Lagu | MiyaBot</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
-<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css" />
+<script src="https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.min.js"></script>
 <style>
 body {
-margin: 0; padding: 0;
-box-sizing: border-box;
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-background: #5372F0;
-font-family: 'Poppins', sans-serif;
+  margin: 0; padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
 }
 .container {
-width: 440px;
-border-radius: 7px;
-background: #fff;
-box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  width: 440px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 20px #0ff;
+  padding: 20px;
 }
 .container h1 {
-font-size: 25px;
-font-weight: 500;
-padding: 16px 25px;
-text-align: center;
-border-bottom: 1px solid #ccc;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0ff;
 }
-.content {
-margin: 25px 20px 35px;
-}
-#gambar {
-display: block;
-width: 100%;
-height: auto;
-border-radius: 7px;
-margin-bottom: 15px;
+.audio-player {
+  margin-bottom: 20px;
 }
 #desc {
-margin-bottom: 10px;
-text-align: center;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
 }
-input{
-height: 55px;
-font-size: 17px;
+input {
+  width: 90%;
+  padding: 12px 16px;
+  font-size: 18px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 15px;
+  background: #111;
+  color: #0ff;
+  outline: none;
 }
-input{
-width: 90%;
-height: 60px;
-outline: none;
-padding: 0 16px;
-font-size: 18px;
-border-radius: 5px;
-border: 1px solid #bfbfbf;
-}
-input:focus{
-box-shadow: 0px 2px 4px rgba(0,0,0,0.08);
-}
-input::placeholder{
-color: #aaa;
-}
-input:focus::placeholder{
-color: #bfbfbf;
+input::placeholder {
+  color: #666;
 }
 .buttons {
-display: flex;
-margin-top: 20px;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
-.buttons button {
-border: none;
-outline: none;
-color: #fff;
-cursor: pointer;
-padding: 15px 0;
-font-size: 17px;
-border-radius: 5px;
-width: calc(50% - 5px);
-background: #5372F0;
-transition: all 0.3s ease;
+button {
+  width: calc(50% - 5px);
+  padding: 14px 0;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(45deg, #ff00cc, #3333ff);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
 }
-.buttons button:hover {
-background: #2c52ed;
-}
-.buttons button:active {
-transform: scale(0.97);
+button:hover {
+  background: linear-gradient(45deg, #ff3399, #6666ff);
 }
 .phone-display {
-text-align: center;
-margin-bottom: 20px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
 }
-.phone-display p {
-margin: 5px 0;
+.phone-display span {
+  color: #0ff;
 }
-.buttons button, #changePhone {
-border: none;
-outline: none;
-color: #fff;
-cursor: pointer;
-padding: 15px 0;
-font-size: 17px;
-border-radius: 5px;
-width: calc(50% - 5px);
-background: #5372F0;
-transition: all 0.3s ease;
-}
-.buttons button:hover, #changePhone:hover {
-background: #2c52ed;
-}
-.buttons button:active, #changePhone:active {
-transform: scale(0.97);
-}
-
 </style>
 </head>
 <body>
 <div class="container">
 <h1>Tebak Lagu</h1>
-<div class="content">
-<audio id="player" src="" controls></audio>
+<div class="audio-player">
+  <audio id="audio" controls></audio>
+</div>
 <p id="desc"></p>
-<input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
+<input type="text" id="jawaban" placeholder="Masukkan Judul Lagu...">
 <div class="buttons">
-<button id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
-<button id="submit">Cek Jawaban</button>
+  <button id="changePhone">Ubah Nomor</button>
+  <button id="submit">Cek Jawaban</button>
 </div>
 <div class="phone-display">
-<p>Nomor WhatsApp Anda: <span id="phoneDisplay"></span></p>
-
-</div>
+  <p>Nomor WhatsApp Anda: <span id="phoneDisplay"></span></p>
 </div>
 </div>
 
 <script>
-const player = new Plyr('#player',{controls: ['play', 'progress', 'current-time',],autoplay: true})
-
 let correctAnswer;
+const player = new Plyr('#audio');
 
 function updatePhoneDisplay() {
-const phoneNumber = localStorage.getItem('phoneNumber') || 'Belum disetel';
-document.getElementById('phoneDisplay').innerText = phoneNumber;
+  const phoneNumber = localStorage.getItem('phoneNumber') || 'Belum disetel';
+  document.getElementById('phoneDisplay').innerText = phoneNumber;
 }
 
-async function loadNewImage() {
-try {
-const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebaklagu.json');
-const d = await res.json();
-const data = d.result
-const randomImage = data[Math.floor(Math.random() * data.length)];
-correctAnswer = randomImage.name.toLowerCase();
-document.getElementById('desc').innerText = 'Artis: '+ randomImage.artist;
-document.getElementById('player').src = randomImage.audio;
-document.getElementById('jawaban').value = '';
-} catch (error) {
-Swal.fire('Error!', 'Gagal mengambil gambar.', 'error');
-}
+async function loadNewSong() {
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebaklagu.json');
+    const d = await res.json();
+    const data = d.result;
+    const randomSong = data[Math.floor(Math.random() * data.length)];
+    correctAnswer = randomSong.name.toLowerCase();
+    document.getElementById('desc').innerText = randomSong.artist;
+    document.getElementById('audio').src = randomSong.audio;
+    document.getElementById('jawaban').value = '';
+    player.source = {
+      type: 'audio',
+      sources: [{ src: randomSong.audio, type: 'audio/mp3' }]
+    };
+  } catch (error) {
+    Swal.fire('Error!', 'Gagal memuat lagu.', 'error');
+  }
 }
 
-loadNewImage();
+loadNewSong();
 updatePhoneDisplay();
 
 document.getElementById('submit').addEventListener('click', async () => {
-const userAnswer = document.getElementById('jawaban').value.toLowerCase();
-if (!userAnswer) return Swal.fire('Oops!', 'Masukkan jawaban terlebih dahulu!', 'warning');
-if (userAnswer !== correctAnswer) return Swal.fire('Salah!', 'Coba lagi.', 'error');
+  const userAnswer = document.getElementById('jawaban').value.toLowerCase();
+  if (!userAnswer) return Swal.fire('Oops!', 'Masukkan jawaban dulu!', 'warning');
+  if (userAnswer !== correctAnswer) return Swal.fire('Salah!', 'Coba lagi.', 'error');
 
-let phoneNumber = localStorage.getItem('phoneNumber');
-if (!phoneNumber) {
-let {value: inputNumber} = await Swal.fire({
-title: 'Benar!',
-input: 'text',
-inputLabel: 'Masukkan nomor WhatsApp Anda untuk klaim hadiah:',
-inputPlaceholder: 'Nomor WhatsApp',
-showCancelButton: true
-});
-if (!inputNumber) return Swal.fire('Dibatalkan', 'Nomor WhatsApp diperlukan untuk klaim hadiah.', 'error');
-phoneNumber = inputNumber;
-localStorage.setItem('phoneNumber', phoneNumber);
-updatePhoneDisplay();
-}
+  let phoneNumber = localStorage.getItem('phoneNumber');
+  if (!phoneNumber) {
+    let {value: inputNumber} = await Swal.fire({
+      title: 'Benar!',
+      input: 'text',
+      inputLabel: 'Masukkan nomor WhatsApp Anda:',
+      inputPlaceholder: '08xxxxxx',
+      showCancelButton: true
+    });
+    if (!inputNumber) return Swal.fire('Dibatalkan', 'Nomor WhatsApp diperlukan.', 'error');
+    phoneNumber = inputNumber;
+    localStorage.setItem('phoneNumber', phoneNumber);
+    updatePhoneDisplay();
+  }
 
-try {
-await fetch('/api/winners', {
-method: 'POST',
-headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Lagu', timestamp: new Date().toISOString() })
-});
-Swal.fire('Sukses!', 'Kemenanganmu telah dicatat!', 'success');
-loadNewImage();
-} catch (error) {
-Swal.fire('Error!', 'Gagal mengirim data ke server.', 'error');
-}
+  try {
+    await fetch('/api/winners', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Lagu', timestamp: new Date().toISOString() })
+    });
+    Swal.fire('Sukses!', 'Kemenanganmu dicatat!', 'success');
+    loadNewSong();
+  } catch (error) {
+    Swal.fire('Error!', 'Gagal kirim ke server.', 'error');
+  }
 });
 
 document.getElementById('changePhone').addEventListener('click', async () => {
-let {value: inputNumber} = await Swal.fire({
-title: 'Ubah Nomor WhatsApp',
-input: 'text',
-inputLabel: 'Masukkan nomor WhatsApp baru:',
-inputPlaceholder: 'Nomor WhatsApp',
-showCancelButton: true
+  let {value: inputNumber} = await Swal.fire({
+    title: 'Ubah Nomor WhatsApp',
+    input: 'text',
+    inputLabel: 'Nomor baru:',
+    inputPlaceholder: '08xxxxxx',
+    showCancelButton: true
+  });
+  if (inputNumber) {
+    localStorage.setItem('phoneNumber', inputNumber);
+    updatePhoneDisplay();
+    Swal.fire('Berhasil!', 'Nomor diperbarui.', 'success');
+  }
 });
-if (inputNumber) {
-localStorage.setItem('phoneNumber', inputNumber);
-updatePhoneDisplay();
-Swal.fire('Berhasil!', 'Nomor WhatsApp telah diperbarui.', 'success');
-}
-});
-
 </script>
 </body>
 </html>

@@ -1,214 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tebak Gambar | MiyaBot</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-body {
-margin: 0; padding: 0;
-box-sizing: border-box;
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
-background: #5372F0;
-font-family: 'Poppins', sans-serif;
-}
-.container {
-width: 440px;
-border-radius: 7px;
-background: #fff;
-box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-}
-.container h1 {
-font-size: 25px;
-font-weight: 500;
-padding: 16px 25px;
-text-align: center;
-border-bottom: 1px solid #ccc;
-}
-.content {
-margin: 25px 20px 35px;
-}
-#gambar {
-display: block;
-width: 100%;
-height: auto;
-border-radius: 7px;
-margin-bottom: 15px;
-}
-#desc {
-margin-bottom: 10px;
-text-align: center;
-}
-input{
-height: 55px;
-font-size: 17px;
-}
-input{
-width: 90%;
-height: 60px;
-outline: none;
-padding: 0 16px;
-font-size: 18px;
-border-radius: 5px;
-border: 1px solid #bfbfbf;
-}
-input:focus{
-box-shadow: 0px 2px 4px rgba(0,0,0,0.08);
-}
-input::placeholder{
-color: #aaa;
-}
-input:focus::placeholder{
-color: #bfbfbf;
-}
-.buttons {
-display: flex;
-margin-top: 20px;
-justify-content: space-between;
-}
-.buttons button {
-border: none;
-outline: none;
-color: #fff;
-cursor: pointer;
-padding: 15px 0;
-font-size: 17px;
-border-radius: 5px;
-width: calc(50% - 5px);
-background: #5372F0;
-transition: all 0.3s ease;
-}
-.buttons button:hover {
-background: #2c52ed;
-}
-.buttons button:active {
-transform: scale(0.97);
-}
-.phone-display {
-text-align: center;
-margin-bottom: 20px;
-}
-.phone-display p {
-margin: 5px 0;
-}
-.buttons button, #changePhone {
-border: none;
-outline: none;
-color: #fff;
-cursor: pointer;
-padding: 15px 0;
-font-size: 17px;
-border-radius: 5px;
-width: calc(50% - 5px);
-background: #5372F0;
-transition: all 0.3s ease;
-}
-.buttons button:hover, #changePhone:hover {
-background: #2c52ed;
-}
-.buttons button:active, #changePhone:active {
-transform: scale(0.97);
-}
-
-</style>
+  <meta charset="UTF-8">
+  <title>Tebak Gambar | MiyaBot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffe7;
+      padding: 0 10px;
+    }
+    .container {
+      width: 440px;
+      background: rgba(0,0,0,0.85);
+      border: 2px solid #00ffe7;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ffe7, 0 0 40px #ff00ff;
+      overflow: hidden;
+    }
+    h1 {
+      text-align: center;
+      padding: 16px;
+      font-size: 26px;
+      background: rgba(0,0,0,0.9);
+      border-bottom: 1px solid #444;
+    }
+    .content {
+      padding: 24px;
+    }
+    #gambar {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      box-shadow: 0 0 15px #00ffe7;
+    }
+    #desc {
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+    input {
+      width: 100%; height: 50px;
+      padding: 0 16px;
+      font-size: 18px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #1a001f;
+      color: #fff;
+      transition: border-color 0.3s;
+    }
+    input:focus { outline: none; border-color: #00ffe7; }
+    input::placeholder { color: #777; }
+    .buttons {
+      display: flex; gap: 12px; margin-top: 20px;
+    }
+    .buttons button {
+      flex: 1; padding: 12px 0;
+      font-size: 17px; border: none;
+      border-radius: 6px; cursor: pointer;
+      transition: opacity 0.3s, transform 0.2s;
+    }
+    #changePhone { background: #6c757d; color: #fff; }
+    #submit     { background: #ff00ff; color: #000; }
+    .buttons button:hover { opacity: 0.85; }
+    .buttons button:active { transform: scale(0.95); }
+    .phone-display {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #00ffe7;
+    }
+    .phone-display span { font-weight: 700; }
+  </style>
 </head>
 <body>
-<div class="container">
-<h1>Tebak Gambar</h1>
-<div class="content">
-<img id="gambar" src="" alt="Tebak Gambar">
-<p id="desc"></p>
-<input type="text" id="jawaban" spellcheck="false" placeholder="Masukkan Jawabanmu Disini">
-<div class="buttons">
-<button id="changePhone" style="background:#6C757D;">Ubah Nomor</button>
-<button id="submit">Cek Jawaban</button>
-</div>
-<div class="phone-display">
-<p>Nomor WhatsApp Anda: <span id="phoneDisplay"></span></p>
+  <div class="container">
+    <h1>tebak gambar</h1>
+    <div class="content">
+      <img id="gambar" src="" alt="tebak gambar">
+      <p id="desc">loading...</p>
+      <input type="text" id="jawaban" spellcheck="false" placeholder="jawaban kamu">
+      <div class="buttons">
+        <button id="changePhone">ubah nomor</button>
+        <button id="submit">cek jawaban</button>
+      </div>
+      <div class="phone-display">
+        nomor wa: <span id="phoneDisplay">–</span>
+      </div>
+    </div>
+  </div>
 
-</div>
-</div>
-</div>
+  <script>
+    // hadiah kocak
+    const hadiahList = [
+      '🏆 voucher bakso gratis (cuma cetak di chat)',
+      '🍫 coklat virtual',
+      '🥤 AI traktir es teh (bayar sendiri)',
+      '🥇 gelar “juara neon” se-maya',
+      '🧦 kaos kaki neon (0% garansi)',
+      '🎁 tiket konser diode (ngarep)'
+    ];
+    const getHadiah = () => hadiahList[Math.floor(Math.random() * hadiahList.length)];
 
-<script>
-let correctAnswer;
+    let correctAnswer;
+    const imgEl   = document.getElementById('gambar');
+    const descEl  = document.getElementById('desc');
+    const inputEl = document.getElementById('jawaban');
+    const phoneEl = document.getElementById('phoneDisplay');
 
-function updatePhoneDisplay() {
-const phoneNumber = localStorage.getItem('phoneNumber') || 'Belum disetel';
-document.getElementById('phoneDisplay').innerText = phoneNumber;
-}
+    function updatePhoneDisplay() {
+      phoneEl.innerText = localStorage.getItem('phoneNumber') || 'belum disetel';
+    }
 
-async function loadNewImage() {
-try {
-const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebakgambar.json');
-const d = await res.json();
-const data = d.result
-const randomImage = data[Math.floor(Math.random() * data.length)];
-correctAnswer = randomImage.jawaban.toLowerCase();
-document.getElementById('desc').innerText = randomImage.deskripsi;
-document.getElementById('gambar').src = randomImage.image;
-document.getElementById('jawaban').value = '';
-} catch (error) {
-Swal.fire('Error!', 'Gagal mengambil gambar.', 'error');
-}
-}
+    async function loadNewImage() {
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/SatzzDev/database/refs/heads/master/games/tebakgambar.json');
+        const { result } = await res.json();
+        const rnd = result[Math.floor(Math.random() * result.length)];
+        correctAnswer = rnd.jawaban.toLowerCase();
+        imgEl.src  = rnd.image;
+        descEl.innerText = rnd.deskripsi;
+        inputEl.value = '';
+      } catch {
+        Swal.fire('Error','gagal load gambar','error');
+      }
+    }
 
-loadNewImage();
-updatePhoneDisplay();
+    document.getElementById('submit').addEventListener('click', async () => {
+      const ans = inputEl.value.trim().toLowerCase();
+      if (!ans) return Swal.fire('Oops','masukkan jawaban!','warning');
+      if (ans !== correctAnswer) return Swal.fire('Salah','coba lagi','error');
 
-document.getElementById('submit').addEventListener('click', async () => {
-const userAnswer = document.getElementById('jawaban').value.toLowerCase();
-if (!userAnswer) return Swal.fire('Oops!', 'Masukkan jawaban terlebih dahulu!', 'warning');
-if (userAnswer !== correctAnswer) return Swal.fire('Salah!', 'Coba lagi.', 'error');
+      let phone = localStorage.getItem('phoneNumber');
+      if (!phone) {
+        const { value } = await Swal.fire({
+          title: 'Benar! 🎉',
+          text: 'masukkan nomor WA kamu:',
+          input: 'text', inputPlaceholder: '08xxxxxxxxxx',
+          showCancelButton: true, reverseButtons: true
+        });
+        if (!value) return Swal.fire('Dibatalkan','nomor WA diperlukan','error');
+        phone = value;
+        localStorage.setItem('phoneNumber', phone);
+        updatePhoneDisplay();
+      }
 
-let phoneNumber = localStorage.getItem('phoneNumber');
-if (!phoneNumber) {
-let {value: inputNumber} = await Swal.fire({
-title: 'Benar!',
-input: 'text',
-inputLabel: 'Masukkan nomor WhatsApp Anda untuk klaim hadiah:',
-inputPlaceholder: 'Nomor WhatsApp',
-showCancelButton: true
-});
-if (!inputNumber) return Swal.fire('Dibatalkan', 'Nomor WhatsApp diperlukan untuk klaim hadiah.', 'error');
-phoneNumber = inputNumber;
-localStorage.setItem('phoneNumber', phoneNumber);
-updatePhoneDisplay();
-}
+      const hadiah = getHadiah();
+      try {
+        await fetch('/api/winners', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ phone, game: 'Tebak Gambar', hadiah, timestamp: new Date().toISOString() })
+        });
+        Swal.fire('🎉 Pemenang!','Hadiahmu: ' + hadiah,'success');
+        loadNewImage();
+      } catch {
+        Swal.fire('Error','gagal kirim data','error');
+      }
+    });
 
-try {
-await fetch('/api/winners', {
-method: 'POST',
-headers: {'Content-Type': 'application/json'},
-body: JSON.stringify({ phone: phoneNumber, game: 'Tebak Gambar', timestamp: new Date().toISOString() })
-});
-Swal.fire('Sukses!', 'Kemenanganmu telah dicatat!', 'success');
-loadNewImage();
-} catch (error) {
-Swal.fire('Error!', 'Gagal mengirim data ke server.', 'error');
-}
-});
+    document.getElementById('changePhone').addEventListener('click', async () => {
+      const { value } = await Swal.fire({
+        title: 'Ubah Nomor WA', input: 'text', inputPlaceholder: '08xxxxxxxxxx',
+        showCancelButton: true, reverseButtons: true
+      });
+      if (value) {
+        localStorage.setItem('phoneNumber', value);
+        updatePhoneDisplay();
+        Swal.fire('Berhasil','nomor diupdate','success');
+      }
+    });
 
-document.getElementById('changePhone').addEventListener('click', async () => {
-let {value: inputNumber} = await Swal.fire({
-title: 'Ubah Nomor WhatsApp',
-input: 'text',
-inputLabel: 'Masukkan nomor WhatsApp baru:',
-inputPlaceholder: 'Nomor WhatsApp',
-showCancelButton: true
-});
-if (inputNumber) {
-localStorage.setItem('phoneNumber', inputNumber);
-updatePhoneDisplay();
-Swal.fire('Berhasil!', 'Nomor WhatsApp telah diperbarui.', 'success');
-}
-});
-
-document.getElementById('refresh').addEventListener('click', loadNewImage);
-</script>
+    // init
+    updatePhoneDisplay();
+    loadNewImage();
+  </script>
 </body>
 </html>

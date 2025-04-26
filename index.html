@@ -1,70 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Daftar Game | MiyaBot</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<style>
-body {
-margin: 0; padding: 0;
-box-sizing: border-box;
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
-background: #5372F0;
-font-family: 'Poppins', sans-serif;
-}
-.container {
-width: 440px;
-border-radius: 7px;
-background: #fff;
-padding: 20px;
-box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-text-align: center;
-}
-.container h1 {
-margin-bottom: 20px;
-}
-.game-list {
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
-button {
-padding: 10px 20px;
-border: none;
-outline: none;
-border-radius: 5px;
-background-color: #5372F0;
-color: white;
-cursor: pointer;
-transition: background-color 0.3s;
-}
-button:hover {
-background-color: #2c52ed;
-}
-#gambar {
-display: block;
-width: 100%;
-height: auto;
-border-radius: 7px;
-margin-bottom: 15px;
-}
-</style>
+  <title>Daftar Game | MiyaBot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" 
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      /* hilangin overflow hidden */
+      /* overflow: hidden; */ 
+      overflow-y: auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start; /* biar kontainer mulai di atas */
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffe7;
+    }
+    .container {
+      width: 440px;
+      margin: 40px 0; /* kasih ruang atas-bawah */
+      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 25px;
+      box-shadow: 0 0 20px #00ffe7, 0 0 40px #ff00ff;
+      text-align: center;
+      border: 2px solid #00ffe7;
+    }
+    .container h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      color: #00ffe7;
+    }
+    .game-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    button {
+      padding: 12px 20px;
+      border: 2px solid #ff00ff;
+      background: transparent;
+      color: #ff00ff;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff00ff;
+      color: #000;
+      box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+    }
+    #gambar {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #00ffe7;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-<h1>Daftar Game</h1>
-<img id='gambar' src='https://i.pinimg.com/736x/2e/1e/2f/2e1e2f842bc592dfa230cf9550bda3c6.jpg'></img>
-<div class="game-list">
-<button onclick="window.location.href='/games/asahotak'">Asah Otak</button>
-<button onclick="window.location.href='/games/susunkata'">Susun Kata</button>
-<button onclick="window.location.href='/games/siapakahaku'">Siapakah Aku</button>
-<button onclick="window.location.href='/games/tebakgambar'">Tebak Gambar</button>
-<button onclick="window.location.href='/games/tebaklagu'">Tebak Lagu</button>
-</div>
-</div>
+  <div class="container">
+    <h1>Daftar Game</h1>
+    <img 
+      id="gambar" 
+      src="https://i.pinimg.com/736x/2e/1e/2f/2e1e2f842bc592dfa230cf9550bda3c6.jpg" 
+      alt="Cyber Image">
+    <div class="game-list">
+      <button onclick="window.location.href='/games/Asah-Otak'">Asah Otak</button>
+      <button onclick="window.location.href='/games/Tic-Tac-Toe'">Tic-Tac-Toe</button>
+      <button onclick="window.location.href='/games/Susun-Kata'">Susun Kata</button>
+      <button onclick="window.location.href='/games/Siapakah-Aku?'">Siapakah Aku</button>
+      <button onclick="window.location.href='/games/Tebak-Gambar'">Tebak Gambar</button>
+      <button onclick="window.location.href='/games/Tebak-Lagu'">Tebak Lagu</button>
+    </div>
+  </div>
 </body>
 </html>
